@@ -15,6 +15,8 @@
 				<slot name="operation"></slot>
 			</el-form-item>
 		</component>
+
+		<div>{{ model }}</div>
 	</div>
 </template>
 

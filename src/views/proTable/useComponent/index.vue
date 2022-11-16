@@ -63,13 +63,14 @@ import {
 	deleteUser,
 	editUser,
 	addUser,
-	changeUserStatus,
+	// changeUserStatus,
 	resetUserPassWord,
 	exportUserInfo,
-	BatchAddUser,
-	getUserStatus,
-	getUserGender
+	BatchAddUser
+	// getUserStatus,
+	// getUserGender
 } from "@/api/modules/user";
+import testColumns from "@/assets/json/testColumns.json";
 
 // 获取 ProTable 元素，调用其获取刷新数据方法（还能获取到当前查询参数，方便导出携带参数）
 const proTable = ref();
@@ -92,88 +93,65 @@ const dataCallback = (data: any) => {
 // 页面按钮权限
 const { BUTTONS } = useAuthButtons();
 
-// 自定义渲染表头（使用tsx语法）
-const headerRender = (row: ColumnProps) => {
-	return (
-		<el-button
-			type="primary"
-			onClick={() => {
-				ElMessage.success("我是通过 tsx 语法渲染的表头");
-			}}
-		>
-			{row.label}
-		</el-button>
-	);
-};
+// 自定义渲染头部(使用tsx语法)
+// const renderHeader = (scope: any) => {
+// 	return (
+// 		<el-button
+// 			type="primary"
+// 			onClick={() => {
+// 				ElMessage.success("我是自定义表头");
+// 			}}
+// 		>
+// 			{scope.row.label}
+// 		</el-button>
+// 	);
+// };
 
 // 表格配置项
-const columns: ColumnProps[] = [
-	{ type: "selection", fixed: "left", width: 80 },
-	{ type: "index", label: "#", width: 80 },
-	{ type: "expand", label: "Expand", width: 100 },
-	{
-		prop: "username",
-		label: "用户姓名",
-		search: { el: "input" },
-		render: scope => {
-			return (
-				<el-button type="primary" link onClick={() => ElMessage.success("我是通过 tsx 语法渲染的内容")}>
-					{scope.row.username}
-				</el-button>
-			);
-		}
-	},
-	{
-		prop: "gender",
-		label: "性别",
-		enum: getUserGender,
-		fieldNames: { label: "genderLabel", value: "genderValue" },
-		search: { el: "select" }
-	},
-	{ prop: "idCard", label: "身份证号", search: { el: "input" } },
-	{ prop: "email", label: "邮箱", search: { el: "input" } },
-	{ prop: "address", label: "居住地址" },
-	{
-		prop: "status",
-		label: "用户状态",
-		enum: getUserStatus,
-		fieldNames: { label: "userLabel", value: "userStatus" },
-		search: {
-			el: "tree-select",
-			props: { props: { label: "userLabel" }, nodeKey: "userStatus" }
-		},
-		render: (scope: { row: User.ResUserList }) => {
-			return (
-				<>
-					{BUTTONS.value.status ? (
-						<el-switch
-							model-value={scope.row.status}
-							active-text={scope.row.status ? "启用" : "禁用"}
-							active-value={1}
-							inactive-value={0}
-							onClick={() => changeStatus(scope.row)}
-						/>
-					) : (
-						<el-tag type={scope.row.status ? "success" : "danger"}>{scope.row.status ? "启用" : "禁用"}</el-tag>
-					)}
-				</>
-			);
-		}
-	},
-	{
-		prop: "createTime",
-		label: "创建时间",
-		headerRender,
-		width: 200,
-		search: {
-			el: "date-picker",
-			span: 2,
-			defaultValue: ["2022-11-12 11:35:00", "2022-12-12 11:35:00"],
-			props: { type: "datetimerange" }
-		}
-	},
-	{ prop: "operation", label: "操作", fixed: "right", width: 330 }
-];
+const columns: Partial<ColumnProps>[] = await Promise.resolve(testColumns.data as Partial<ColumnProps>[]);
+// const columns: Partial<ColumnProps>[] = [
+// 	{ type: "selection", width: 80, fixed: "left" },
+// 	{ type: "index", label: "#", width: 80 },
+// 	{ type: "expand", label: "Expand", width: 100 },
+// 	{ prop: "username", label: "用户姓名", width: 130, search: true, renderHeader },
+// 	// 😄 enum 可以直接是数组对象，也可以是请求方法(proTable 内部会执行获取 enum 的这个方法)，下面用户状态也同理
+// 	// 😄 enum 为请求方法时，后台返回的数组对象 key 值不是 label 和 value 的情况，可以在 searchProps 中指定 label 和 value 的 key 值
+// 	{
+// 		prop: "gender",
+// 		label: "性别",
+// 		width: 120,
+// 		sortable: true,
+// 		search: true,
+// 		searchType: "select",
+// 		enum: getUserGender,
+// 		searchProps: { label: "genderLabel", value: "genderValue" }
+// 	},
+// 	{ prop: "idCard", label: "身份证号", search: true },
+// 	{ prop: "email", label: "邮箱", search: true },
+// 	{ prop: "address", label: "居住地址", search: true },
+// 	{
+// 		prop: "status",
+// 		label: "用户状态",
+// 		sortable: true,
+// 		search: true,
+// 		searchType: "select",
+// 		enum: getUserStatus,
+// 		searchProps: { label: "userLabel", value: "userStatus" }
+// 	},
+// 	{
+// 		prop: "createTime",
+// 		label: "创建时间",
+// 		width: 200,
+// 		sortable: true,
+// 		search: true,
+// 		searchType: "datetimerange",
+// 		searchProps: {
+// 			disabledDate: (time: Date) => time.getTime() < Date.now() - 8.64e7
+// 		},
+// 		searchInitParam: ["2022-09-30 00:00:00", "2022-09-20 23:59:59"]
+// 	},
+// 	{ prop: "operation", label: "操作", width: 330, fixed: "right", renderHeader }
+// ];
 
 // 删除用户信息
 const deleteAccount = async (params: User.ResUserList) => {
@@ -195,10 +173,10 @@ const resetPass = async (params: User.ResUserList) => {
 };
 
 // 切换用户状态
-const changeStatus = async (row: User.ResUserList) => {
-	await useHandleData(changeUserStatus, { id: row.id, status: row.status == 1 ? 0 : 1 }, `切换【${row.username}】用户状态`);
-	proTable.value.getTableList();
-};
+// const changeStatus = async (row: User.ResUserList) => {
+// 	await useHandleData(changeUserStatus, { id: row.id, status: row.status == 1 ? 0 : 1 }, `切换【${row.username}】用户状态`);
+// 	proTable.value.getTableList();
+// };
 
 // 导出用户列表
 const downloadFile = async () => {

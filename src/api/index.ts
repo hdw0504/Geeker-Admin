@@ -109,4 +109,6 @@ class RequestHttp {
 	}
 }
 
+export const request = (baseURL: string) => new RequestHttp({ ...config, baseURL });
+
 export default new RequestHttp(config);

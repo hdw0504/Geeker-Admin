@@ -1,0 +1,102 @@
+{
+	"code": 200,
+	"data": [
+		{
+			"type": "selection",
+			"width": 80,
+			"fixed": "left"
+		},
+		{
+			"type": "index",
+			"label": "#",
+			"width": 80
+		},
+		{
+			"type": "expand",
+			"label": "Expand",
+			"width": 100
+		},
+		{
+			"prop": "username",
+			"label": "用户姓名",
+			"width": 130,
+			"search": true
+		},
+		{
+			"prop": "gender",
+			"label": "性别",
+			"width": 120,
+			"sortable": true,
+			"search": true,
+			"searchType": "select",
+			"enum": [
+				{
+					"genderLabel": "男",
+					"genderValue": 1
+				},
+				{
+					"genderLabel": "女",
+					"genderValue": 2
+				}
+			],
+			"searchProps": {
+				"label": "genderLabel",
+				"value": "genderValue"
+			}
+		},
+		{
+			"prop": "idCard",
+			"label": "身份证号",
+			"search": true
+		},
+		{
+			"prop": "email",
+			"label": "邮箱",
+			"search": true
+		},
+		{
+			"prop": "address",
+			"label": "居住地址",
+			"search": true
+		},
+		{
+			"prop": "status",
+			"label": "用户状态",
+			"sortable": true,
+			"search": true,
+			"searchType": "select",
+			"enum": [
+				{
+					"userLabel": "启用",
+					"userStatus": 1
+				},
+				{
+					"userLabel": "禁用",
+					"userStatus": 0
+				}
+			],
+			"searchProps": {
+				"label": "userLabel",
+				"value": "userStatus"
+			}
+		},
+		{
+			"prop": "createTime",
+			"label": "创建时间",
+			"width": 200,
+			"sortable": true,
+			"search": true,
+			"searchType": "datetimerange",
+			"searchInitParam": [
+				"2022-09-30 00:00:00",
+				"2022-09-20 23:59:59"
+			]
+		},
+		{
+			"prop": "operation",
+			"label": "操作",
+			"width": 330,
+			"fixed": "right"
+		}
+	]
+}

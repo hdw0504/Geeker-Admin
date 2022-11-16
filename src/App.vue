@@ -1,6 +1,13 @@
 <template>
 	<el-config-provider :locale="i18nLocale" :button="config" :size="assemblySize">
-		<router-view></router-view>
+		<suspense>
+			<template #default>
+				<router-view></router-view>
+			</template>
+			<template #fallback>
+				<Loading />
+			</template>
+		</suspense>
 	</el-config-provider>
 </template>
 

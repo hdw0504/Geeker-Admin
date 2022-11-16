@@ -16,6 +16,50 @@
 			}
 		},
 		{
+			"path": "/other",
+			"name": "other",
+			"redirect": "/other/importTest",
+			"meta": {
+				"icon": "HomeFilled",
+				"title": "其他",
+				"isLink": "",
+				"isHide": false,
+				"isFull": false,
+				"isAffix": false,
+				"isKeepAlive": true
+			},
+			"children": [
+				{
+					"path": "/other/demo",
+					"name": "otherDemo",
+					"component": "/other/demo/index",
+					"meta": {
+						"icon": "Histogram",
+						"title": "demo",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false,
+						"isKeepAlive": true
+					}
+				},
+				{
+					"path": "/other/importTest",
+					"name": "importTest",
+					"component": "/other/importTest/index",
+					"meta": {
+						"icon": "Histogram",
+						"title": "模拟上传",
+						"isLink": "",
+						"isHide": false,
+						"isFull": false,
+						"isAffix": false,
+						"isKeepAlive": true
+					}
+				}
+			]
+		},
+		{
 			"path": "/dataScreen",
 			"name": "dataScreen",
 			"component": "/dataScreen/index",
